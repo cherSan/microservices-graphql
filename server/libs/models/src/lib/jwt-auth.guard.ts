@@ -2,9 +2,9 @@ import {Injectable, ExecutionContext, CanActivate, UnauthorizedException} from '
 import {JwtService} from "@nestjs/jwt";
 import {GqlExecutionContext} from "@nestjs/graphql";
 import {Reflector} from "@nestjs/core";
-import {Roles} from "./roles.decorator";
+import {Roles, UserRoles} from "./roles.decorator";
 import {AuthenticationError} from "@nestjs/apollo";
-function match(userRoles: string[], roles: string[]) {
+function match(userRoles: UserRoles[], roles: UserRoles[]) {
   return userRoles?.some(role => roles.includes(role));
 }
 @Injectable()

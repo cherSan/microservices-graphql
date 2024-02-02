@@ -1,3 +1,7 @@
 import { Reflector } from '@nestjs/core';
-
-export const Roles = Reflector.createDecorator<string[]>();
+export enum UserRoles {
+  GUEST,
+  USER,
+  ADMIN
+}
+export const Roles = Reflector.createDecorator<UserRoles[]>();

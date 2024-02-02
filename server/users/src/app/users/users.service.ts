@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {User} from "./user.model";
+import {UserRoles} from "@project/models";
 @Injectable()
 export class UsersService {
   private users: User[] = [
-    { id: 1, name: 'John Doe', postsIds: [1,2], login: '1', password: '1', roles: ['USER'] },
-    { id: 2, name: 'Richard Roe', postsIds: [3,4], login: '2', password: '2' },
+    { id: 1, name: 'John Doe', postsIds: [1,2], login: '1', password: '1', roles: [UserRoles.USER] },
+    { id: 2, name: 'Richard Roe', postsIds: [3,4], login: '2', password: '2', roles: [UserRoles.ADMIN] },
   ];
   findAll(): User[] {
     return this.users;

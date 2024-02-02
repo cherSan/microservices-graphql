@@ -1,5 +1,6 @@
 import {Directive, Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {Post} from "./post.model";
+import {UserRoles} from "@project/models";
 @ObjectType()
 @Directive('@key(fields: "id")')
 export class User {
@@ -13,8 +14,8 @@ export class User {
   password!: string;
   @Field((type) => [Int])
   postsIds?: number[];
-  @Field((type) => [String])
-  roles?: string[];
+  @Field((type) => [UserRoles])
+  roles?: UserRoles[];
   @Field((type) => [Post])
   posts?: Post[]
 }

@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
-import {GraphQLModule} from "@nestjs/graphql";
+import {GraphQLModule, registerEnumType} from "@nestjs/graphql";
 import {ApolloFederationDriver, ApolloFederationDriverConfig} from "@nestjs/apollo";
 import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace';
+import {JwtModule} from "@nestjs/jwt";
+import {UserRoles} from "@project/models";
 import {UsersResolver} from "./users/users.resolver";
 import {UsersService} from "./users/users.service";
 import {Post} from "./users/post.model";
-import {JwtModule} from "@nestjs/jwt";
+registerEnumType(UserRoles, {
+  name: 'UserRoles',
+  description: 'User Roles',
+});
 @Module({
   imports: [
     JwtModule.register({
@@ -15,6 +20,7 @@ import {JwtModule} from "@nestjs/jwt";
     }),
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
+      fieldResolverEnhancers: ['guards'],
       autoSchemaFile: {
         federation: 2
       },

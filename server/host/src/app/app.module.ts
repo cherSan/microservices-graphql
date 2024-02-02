@@ -4,6 +4,7 @@ import { Module } from "@nestjs/common";
 import {GraphQLModule} from "@nestjs/graphql";
 import {JwtModule} from "@nestjs/jwt";
 import { verify, sign } from 'jsonwebtoken';
+import {UserRoles} from "@project/models";
 function extractTokenFromHeader(request: Request): string | undefined {
   const [type, token] = (request.headers as any)['authorization']?.split(' ') ?? [];
   return type === 'Bearer' ? token : undefined;
@@ -11,7 +12,7 @@ function extractTokenFromHeader(request: Request): string | undefined {
 const proxyHeaders = ({ req }: {req: Request}) => {
   const guestToken = sign({
     sid: -1,
-    roles: ['GUEST'],
+    roles: [UserRoles.GUEST],
     name: 'Anonymous'
   }, 'mysecretworld', { expiresIn: '3600s' });
   const token = extractTokenFromHeader(req) || guestToken;
