@@ -6,7 +6,8 @@ import {
   ResolveField,
   Resolver, ResolveReference,
 } from '@nestjs/graphql';
-import { ParseIntPipe } from '@nestjs/common';
+import {ParseIntPipe, UseGuards} from '@nestjs/common';
+import {AuthGuard, Roles} from "@project/models";
 import { PostsService } from './posts.service';
 import {Post} from "./post.model";
 import {User} from "./user.model";
@@ -17,6 +18,8 @@ export class PostsResolver {
   post(@Args({ name: 'id', type: () => ID }, ParseIntPipe) id: number): Post | undefined {
     return this.postsService.findOne(id);
   }
+  @UseGuards(AuthGuard)
+  @Roles(['USER'])
   @Query((returns) => [Post])
   posts(): Post[] {
     return this.postsService.findAll();
